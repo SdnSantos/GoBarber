@@ -7,6 +7,13 @@ class File extends Model {
       {
         name: Sequelize.STRING,
         path: Sequelize.STRING,
+        url: {
+          type: Sequelize.VIRTUAL,
+          // como será formatado esse valor
+          get() {
+            return `http://localhost:3333/files/${this.path}`;
+          },
+        },
       },
       // 2º Parâmetro
       {
