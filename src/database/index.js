@@ -3,12 +3,13 @@ import Sequelize from 'sequelize';
 
 // importação dos models
 import User from '../app/models/User';
+import File from '../app/models/File';
 
 // configurações do banco de dados
 import databaseConfig from '../config/database';
 
 // array que receberá todos os models da aplicação
-const models = [User];
+const models = [User, File];
 
 class Database {
   constructor() {
@@ -22,7 +23,10 @@ class Database {
     this.connection = new Sequelize(databaseConfig);
 
     // .map percorrerá todos os models
-    models.map(model => model.init(this.connection));
+    models
+      .map(model => model.init(this.connection))
+      // só chamará o associate caso existir, por isso o &&
+      .map(model => model.associate && model.associate(this.connection.models));
   }
 }
 
