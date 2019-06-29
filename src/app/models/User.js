@@ -19,8 +19,7 @@ class User extends Model {
     );
     // addHook são trechos de código que executam
     // automáticamente no model
-    // beforeSave irá executar esse hook antes de
-    // salvar um novo usuário no banco
+    // vai gerar o hash da senha
     this.addHook('beforeSave', async user => {
       if (user.password) {
         user.password_hash = await bcrypt.hash(user.password, 8);
@@ -30,6 +29,7 @@ class User extends Model {
     return this;
   }
 
+  // verifica se a senha está correta
   checkPassword(password) {
     return bcrypt.compare(password, this.password_hash);
   }

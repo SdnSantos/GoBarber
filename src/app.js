@@ -14,6 +14,7 @@ class App {
   }
 
   middlewares() {
+    // para aplicação entender JSON
     this.server.use(express.json());
   }
 

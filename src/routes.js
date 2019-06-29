@@ -10,6 +10,8 @@ const routes = new Router();
 routes.post('/users', UserController.store);
 routes.post('/sessions', SessionController.store);
 
+// middleware global
+// só funcionará nos middlewares após ele
 routes.use(authMiddlewares);
 
 routes.put('/users', UserController.update);

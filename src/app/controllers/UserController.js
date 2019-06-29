@@ -2,6 +2,7 @@ import * as Yup from 'yup';
 import User from '../models/User';
 
 class UserController {
+  // store = cadastro de usuário
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
@@ -13,6 +14,7 @@ class UserController {
         .min(6),
     });
 
+    // verificação se está de acordo com as regras do schema
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails' });
     }
@@ -40,6 +42,7 @@ class UserController {
       name: Yup.string(),
       email: Yup.string().email(),
       oldPassword: Yup.string().min(6),
+      // field se refere ao password
       password: Yup.string()
         .min(6)
         .when('oldPassword', (oldPassword, field) =>
@@ -75,6 +78,7 @@ class UserController {
       return res.status(401).json({ error: 'Password does not match' });
     }
 
+    // atualiza o usuário
     const { id, name, provider } = await user.update(req.body);
 
     return res.json({
