@@ -6,11 +6,17 @@ import Appointment from '../models/Appointment';
 
 class AppointmentController {
   async index(req, res) {
+    const { page = 1 } = req.query;
+
     const appointments = await Appointment.findAll({
       where: { user_id: req.userId, canceled_at: null },
       order: ['date'],
       // campos que quer retornar
       attributes: ['id', 'date'],
+      // limite de informações por página
+      limit: 20,
+      // cálculo de quantos registros irá pular de acordo com a página
+      offset: (page - 1) * 20,
       // inclusão dos dados do prestador de serviços
       include: [
         {
