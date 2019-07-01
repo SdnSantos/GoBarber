@@ -17,7 +17,7 @@ class AppointmentController {
       where: { user_id: req.userId, canceled_at: null },
       order: ['date'],
       // campos que quer retornar
-      attributes: ['id', 'date'],
+      attributes: ['id', 'date', 'past', 'cancelable'],
       // limite de informações por página
       limit: 20,
       // cálculo de quantos registros irá pular de acordo com a página

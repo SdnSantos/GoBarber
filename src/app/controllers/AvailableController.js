@@ -64,9 +64,10 @@ class AvailableController {
       return {
         time,
         value: format(value, "yyyy-MM-dd'T'HH:mm:ssxxx"),
-        // isAfter vai verificar se irá acontecer depois de agora
         available:
+          // verificação se o horário já passou
           isAfter(value, new Date()) &&
+          // verificação se o horário não está marcado
           !appointments.find(a => format(a.date, 'HH:mm') === time),
       };
     });
