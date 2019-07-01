@@ -1,4 +1,5 @@
 // ESTRUTURA DA APLICAÇÃO
+import 'dotenv/config';
 
 import express from 'express';
 import path from 'path';
@@ -42,9 +43,13 @@ class App {
   exceptionHandler() {
     // quando um middleware tem 4 parâmetros o express entende que é de exceção
     this.server.use(async (err, req, res, next) => {
-      const errors = await new Youch(err, req).toJSON();
+      if (process.env.NODE_ENV === 'development') {
+        const errors = await new Youch(err, req).toJSON();
 
-      return res.status(500).json(errors);
+        return res.status(500).json(errors);
+      }
+
+      return res.status(500).json({ error: 'Internal server error' });
     });
   }
 }

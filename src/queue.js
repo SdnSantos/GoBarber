@@ -1,3 +1,5 @@
+import 'dotenv/config';
+
 import Queue from './lib/Queue';
 
 // foi feito em arquivo separado porque não irá rodar no mesmo node
